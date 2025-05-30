@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tektur:wght@400..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <header style="grid-area: head1;" id="headerid">
+        <div id="headerContainer">
+            <h1 id="flex-header">Самокат</h1>
+            <input type="text" name="searchBar" id="flex-input" placeholder="Искать в самокате">
+            <button id="flex-basket"><img src="Assets/Images/Icons/shopping_basket.svg" alt="BasketIcon"></button>
+            <button id="flex-userProfile"><img src="Assets/Images/Icons/user.svg" alt="UserProfileiCON"></button>
+        </div>
+    </header>
+
+    <main style="grid-area: main;" id="mainId">
+
+        <aside style="grid-area: aside;" class="mainAttr">
+            <div id="asideContainer">
+                <div class="category" id="PopularCat">
+                    <h4><img src="Assets/Images/Icons/Popular.png" alt=""> Популярное</h4>
+                </div>
+                <div class="category" id="VegetablesCat">
+                    <h4><img src="Assets/Images/Icons/VegetablesIcon.png" alt=""> Овощи </h4>
+                </div>
+                <div class="category" id="FruitsCat">
+                    <h4><img src="Assets/Images/Icons/FruitsIcon.png" alt=""> Фрукты</h4>
+                </div>
+                <div class="category" id="DrinksCat">
+                    <h4><img src="Assets/Images/Icons/WaterIcon.png" alt=""> Газировка</h4>
+                </div>
+                <div class="category" id="SnacksCat">
+                    <h4><img src="Assets/Images/Icons/Snack.png" alt=""> Снеки</h4>
+                </div>
+            </div>
+        </aside>
+
+        <section style="grid-area: catalog;" class="mainAttr">
+
+            <div id="catalogContainer">
+                <div class="productsRow" id="productsRowId">
+                    <!-- <div class="productCard">
+                        <div class="cardContainer">
+                            <img id="prodImg" src="Assets/Images/Fruits/Kiwi.jpg" alt="KiwiPhoto">
+                            <span>75₽</span>
+                            <h5>Бананы</h5>
+                            <h6>500г</h6>
+                            <button><img src="Assets/Images/PlusBtnSim.svg" alt="PlusBtn"></button>
+                        </div>
+                    </div> -->
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+
+    <script src="FillProducts.js"></script>
+
+
+</body>
+
+</html>
