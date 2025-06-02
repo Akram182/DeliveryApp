@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            width: 100dvw;
+            height: 100dvh;
+        }
+
+        #Container {
+
+            border-radius: 15px;
+        }
+
+        .productCard {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+        }
+
+        #BuyProducts {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%);
+            padding: 10px 20px;
+            border-radius: 15px;
+            border: none;
+            color: white;
+
+            background-color: #302f2d;
+            cursor: pointer;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="Container">
+
+    </div>
+    <button id="BuyProducts"></button>
+
+    <script>
+
+        const container = document.getElementById("Container");
+        const buyProducts = document.getElementById("BuyProducts");
+
+        const OrderList = JSON.parse(localStorage.getItem("busketList"));
+
+        console.log(OrderList);
+        if (OrderList != null) {
+
+            console.log(OrderList);
+
+            const productsList = OrderList.products;
+
+            console.log(productsList);
+            // console.log(productsList.forEach(element => {
+            //     console.log(`${element.name}`);
+            // }));
+
+
+            OrderList.forEach(item => {
+                container.innerHTML +=
+                    `
+            <div class="productCard">
+                <h3 id="productName">${item.name}</h3>
+                <h3 id="productWeight">${item.weight}г</h3>
+                <h3 id="productPrice">${item.price}₽</h3>
+            </div>
+            <hr>
+            `;
+            });
+
+            buyProducts.textContent = OrderList.total + ' ₽';
+
+            console.log(productsList);
+            console.log(JSON.stringify(productsList));
+        }
+        buyProducts.addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/buyProd", {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(OrderList)
+                });
+
+                const data = await response.json();
+                console.log("Сервкер ответил:", data);
+            }
+            catch {
+                console.error("пРОИЗОШЛАС ОШ");
+            }
+        });
+
+    </script>
+</body>
+
+</html>
