@@ -206,7 +206,7 @@ function ProductToBasket(id, CategoryId) {
     };
     console.log(SendObjects);
     console.log(dataToSend);
-   // let JsonSendObj = JSON.stringify(dataToSend);
+    // let JsonSendObj = JSON.stringify(dataToSend);
     //console.log(JsonSendObj);
     //localStorage.setItem("busketList", JsonSendObj);
 
@@ -217,6 +217,12 @@ const button = document.getElementById("flex-basket");
 
 
 button.addEventListener("click", async () => {
+
+    window.location.href = "/basket";
+    console.log(dataToSend);
+    localStorage.setItem("listProd", JSON.stringify(dataToSend));
+
+    /*
     try {
         const response = await fetch("/api/buyProd", {
             method: 'POST',
@@ -227,11 +233,13 @@ button.addEventListener("click", async () => {
         });
 
         const data = await response.json();
+
         console.log("Сервкер ответил:", data);
     }
     catch {
         console.error("пРОИЗОШЛАС ОШ");
     }
+        */
 });
 
 

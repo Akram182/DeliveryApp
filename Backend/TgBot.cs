@@ -1,5 +1,7 @@
-﻿using System.Security.Cryptography;
+﻿using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -12,11 +14,15 @@ namespace Backend
 
     public class TgBot
     {
-        TelegramBotClient bot = new TelegramBotClient("7859472632:AAGSjt0P62nVDe6lAWAeiveUobqQNjGf14w");
-        List<long> EmployersUserID = new List<long>();
-        List<long> AdminsUserId = new List<long>();
+        TelegramBotClient bot = new TelegramBotClient("");
 
+        Dictionary<long, string> EmployersIdWState = new Dictionary<long, string>();
+        Dictionary<long, string> OrdersIdWithEmp = new Dictionary<long, string>();
+
+        List<long> AdminsUserId = new List<long>();
         string uniqueKey = "Ghallo10#20+5";
+
+
 
         public void Start()
         {
@@ -26,11 +32,47 @@ namespace Backend
             bot.OnMessage += AnswerToUser;
             bot.OnUpdate += HandleUpdate;
 
-            //bot.SendMessage(5276251986,"Проверка Отправки заказов");
-            //bot.SendMessage(5276251986, "Проверка Отправки заказов2");
-            //bot.SendMessage(5276251986, "Проверка Отправки заказов3");
-
             WriteLine("Started");
+        }
+
+        public string CheckStatus(string id)
+        {
+            long emplKey = OrdersIdWithEmp.FirstOrDefault(i => i.Value == id).Key;
+            if (EmployersIdWState[emplKey] == "Worker")
+            {
+                return "Заказ доставлен";
+            }
+            else if (EmployersIdWState[emplKey] == "Working")
+            {
+                return "Заказ собирается";
+            }
+            else
+            {
+                return "Ошибка ";
+            }
+        }
+        public async void SendOrders(string message, string id)
+        {
+            var freeEmpID = EmployersIdWState.FirstOrDefault(i => i.Value == "Worker").Key;
+            if (freeEmpID != 0L)
+            {
+                var orderSend = bot.SendMessage(freeEmpID, message, ParseMode.Html,
+                    replyMarkup: new InlineKeyboardMarkup(
+                        new[]
+                        {
+                            new[]
+                            {
+                                InlineKeyboardButton.WithCallbackData("Доставлен","OrderDelivered")
+                            }
+                    }));
+
+                EmployersIdWState[freeEmpID] = "Working";
+                OrdersIdWithEmp.Add(freeEmpID, id);
+
+                await orderSend;
+                WriteLine($"{freeEmpID} получил заказ");
+
+            }
         }
 
         private async Task HandleUpdate(Update update)
@@ -38,33 +80,36 @@ namespace Backend
 
             if (update.Type == UpdateType.CallbackQuery)
             {
+
                 var callBack = update.CallbackQuery!;
                 if (callBack.Data == "makeKurier")
                 {
-                    if (!EmployersUserID.Contains(callBack.Message.From.Id))
+                    if (!EmployersIdWState.Keys.Contains(callBack.Message.From.Id))
                     {
-                        EmployersUserID.Add(callBack.Message.From.Id);
+                        EmployersIdWState.Add(callBack.Message.Chat.Id, "Worker");
 
                         await bot.AnswerCallbackQuery(callBack.Id, $"Congratulations");
                         await bot.SendMessage(callBack.Message.Chat.Id, $"Поздравляем вы теперь курьер ждите заказа!");
                     }
                 }
+
                 if (callBack.Data == "makeAdmin")
                 {
                     await bot.AnswerCallbackQuery(callBack.Id, $"Enter Data");
                     await bot.SendMessage(callBack.Message.Chat.Id, "Введите Unique Key:");
                 }
 
-                //Create Dictionary To save userState e.x:userId,"WaitingFor login"
-                //if (callBack.Message.Text == uniqueKey)
-                //{
-                //    WriteLine("Попытка админа");
-                //    AdminsUserId.Add(callBack.Message.From.Id);
-                //    WriteLine("админ доб");
-                //    await bot.AnswerCallbackQuery(callBack.Id, "Call Inline");
-                //    WriteLine("ответ послаy");
-                //    await bot.SendMessage(callBack.Message.Chat.Id, "Вы теперь Админ");
-                //}
+                if (callBack.Data == "OrderDelivered")
+                {
+                    await bot.AnswerCallbackQuery(callBack.Id, "Спасибо за работу");
+                    string orderStatus = OrdersIdWithEmp.FirstOrDefault(k => k.Key == callBack.Message.Chat.Id).Value;
+                    EmployersIdWState[callBack.Message.Chat.Id] = "Worker";
+
+
+                    WriteLine(orderStatus);
+                    WriteLine("OrderDelivered");
+                }
+
             }
         }
 
@@ -91,7 +136,7 @@ namespace Backend
             {
                 if (AdminsUserId.Contains(message.From.Id))
                 {
-                    foreach (long empId in EmployersUserID)
+                    foreach (long empId in OrdersIdWithEmp.Keys)
                     {
                         await bot.SendMessage(empId, "Alert");
                     }
@@ -108,27 +153,6 @@ namespace Backend
                         );
 
                 }
-
-            }
-            else
-            {
-                WriteLine($"Message Id:{message.Id}\nMessage Text:{message.Text}\nMessage Chat Id:{message.Chat.Id}\nMessage Chat:{message.Chat}\nMessage Chat UserName:{message.Chat.Username}\nMessage Chat fIRSTnAME:{message.Chat.FirstName}\nMessage form LastName:{message.From.LastName} and {message.From.Username} and {message.From.FirstName}");
-
-                await bot.SendMessage(
-                    message.Chat.Id,
-                    text: message.Text,
-                    replyMarkup: new InlineKeyboardMarkup(
-                        new[]{
-                                new[]
-                                {
-                                    InlineKeyboardButton.WithCallbackData("Кнопка 1", "data1"),
-                                    InlineKeyboardButton.WithCallbackData("Кнопка 2", "data2")
-                                },
-                                new[]{
-                                    InlineKeyboardButton.WithCallbackData("Burron 3","3")
-                                }
-                        })
-                    );
 
             }
 

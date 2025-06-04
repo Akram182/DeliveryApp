@@ -38,6 +38,20 @@
             cursor: pointer;
 
         }
+
+        #OrderStatus {
+            position: relative;
+            top: 50%;
+            left: 60%;
+            transform: translate(-50%);
+            background-color: green;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -45,21 +59,32 @@
     <div id="Container">
 
     </div>
+
     <button id="BuyProducts"></button>
+    <!-- <button id="OrderStatus">Check Order Status</button> -->
+    <label for="adressInput">Введите адресс:<input type="text" id="adressInput"></label>
 
     <script>
-
         const container = document.getElementById("Container");
         const buyProducts = document.getElementById("BuyProducts");
+        const ChOrderStatus = document.getElementById("OrderStatus");
 
-        const OrderList = JSON.parse(localStorage.getItem("busketList"));
+        //const adressInput = document.getElementById("adressInput");
+
+        const OrderList = JSON.parse(localStorage.getItem("listProd"));
+        const productsList = OrderList.products;
+        let dataToSend = {};
+        let sendN = {
+            name: "asda"
+        };
 
         console.log(OrderList);
         if (OrderList != null) {
 
             console.log(OrderList);
 
-            const productsList = OrderList.products;
+
+
 
             console.log(productsList);
             // console.log(productsList.forEach(element => {
@@ -67,7 +92,7 @@
             // }));
 
 
-            OrderList.forEach(item => {
+            productsList.forEach(item => {
                 container.innerHTML +=
                     `
             <div class="productCard">
@@ -83,25 +108,96 @@
 
             console.log(productsList);
             console.log(JSON.stringify(productsList));
-        }
-        buyProducts.addEventListener("click", async () => {
-            try {
-                const response = await fetch("/api/buyProd", {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(OrderList)
-                });
 
-                const data = await response.json();
-                console.log("Сервкер ответил:", data);
-            }
-            catch {
-                console.error("пРОИЗОШЛАС ОШ");
+        }
+
+        let orderId = null;
+
+        // При покупке сохраняем ID заказа и запускаем polling
+        buyProducts.addEventListener("click", async () => {
+            if (document.getElementById("adressInput").value == "") {
+                alert("Заполните Адресс");
+            } else {
+                dataToSend = {
+                    products: productsList,
+                    total: OrderList.total,
+                    adress: document.getElementById("adressInput").value
+                };
+
+                try {
+                    const response = await fetch("/api/buyProd", {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(dataToSend)
+                    });
+
+                    const data = await response.json();
+                    orderId = data.orderId;
+                    console.log("Заказ отправлен, ID:", orderId);
+
+
+                    startPolling();
+                } catch {
+                    console.error("Ошибка при заказе");
+                }
             }
         });
 
+        function startPolling() {
+            const interval = setInterval(async () => {
+                if (!orderId) return;
+
+                try {
+                    const response = await fetch(`/api/checkOrderStatus?id=${orderId}`);
+                    const data = await response.json();
+                    console.log("Статус:", data.status);
+
+                    if (data.status === "Заказ доставлен") {
+                        clearInterval(interval);
+                        window.location.href = "/Delivered.html";
+                    }
+                } catch (err) {
+                    console.error("Ошибка при проверке статуса");
+                }
+            }, 3000); // Каждые 3 секунды
+        }
+
+
+
+
+        // buyProducts.addEventListener("click", async () => {
+        //     if (document.getElementById("adressInput").value == "") {
+        //         alert("Заполните Адресс");
+        //     }
+        //     else {
+        //         dataToSend = {
+        //             products: productsList,
+        //             total: OrderList.total,
+        //             adress: document.getElementById("adressInput").value
+        //         };
+        //         console.log(dataToSend);
+
+        //         try {
+        //             const response = await fetch("/api/buyProd", {
+        //                 method: 'POST',
+        //                 headers: {
+        //                     "Content-Type": "application/json"
+        //                 },
+        //                 body: JSON.stringify(dataToSend)
+        //             });
+
+        //             const data = await response.json();
+
+        //             console.log("Сервкер ответил:", data);
+        //         }
+        //         catch {
+        //             console.error("пРОИЗОШЛАС ОШ");
+        //         }
+        //     }
+
+        // });
     </script>
 </body>
 
