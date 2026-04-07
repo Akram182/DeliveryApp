@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "DeliveryBackend.Controllers.AuthController",
+    "Method": "Ping",
+    "RelativePath": "api/Auth/ping",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
