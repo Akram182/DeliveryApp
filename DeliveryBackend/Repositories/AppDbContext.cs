@@ -1,4 +1,5 @@
 ﻿using DeliveryBackend.Repositories.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeliveryBackend.Repositories
@@ -48,18 +49,71 @@ namespace DeliveryBackend.Repositories
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.HasKey(o =>o.Id);
+                entity.HasKey(o => o.Id);
                 entity.Property(o => o.Status).IsRequired().HasMaxLength(50);
-                entity.Property(o => o.PickupAddress).IsRequired().HasMaxLength(200);
-                entity.Property(o => o.DeliveryAddress).IsRequired().HasMaxLength(200);
                 entity.Property(o => o.TotalAmount).IsRequired();
                 entity.Property(o => o.DeliveryFee).IsRequired();
+                entity.Property(o => o.CreatedAt).IsRequired();
+                entity.Property(o => o.DeliveredAt);
 
-                entity.HasOne(o => o)
 
 
-            }); 
+                
 
+                entity.HasOne(o => o.PickupAddress)
+                .WithMany(a => a.PickUpOrders)
+                .HasForeignKey(o => o.PickupAddressId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(o => o.DeliveryAddress)
+                .WithMany(a => a.DeliveryOrders)
+                .HasForeignKey(o => o.DeliveryAddressId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(o => o.Customer)
+                .WithMany(c => c.OrdersAsCustomer)
+                .HasForeignKey(o => o.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(o => o.Courier)
+                .WithMany(c => c.OrdersAsCourier)
+                .HasForeignKey(o => o.CourierId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            });
+
+            modelBuilder.Entity<OrderItem>(entity =>
+            {
+                entity.HasKey(ot => ot.Id);
+                entity.Property(ot => ot.Quantity).HasMaxLength(6).IsRequired();
+                entity.Property(ot => ot.CurrentPrice).IsRequired();
+
+                entity.HasOne(ot => ot.Order)
+                .WithMany(o => o.Items)
+                .HasForeignKey(ot => ot.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(ot => ot.Product)
+                .WithMany(p => p.Items)
+                .HasForeignKey(ot => ot.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            });
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.Name).HasMaxLength(20).IsRequired();
+                entity.Property(p => p.Price).HasMaxLength(25).IsRequired();
+                entity.Property(p => p.Stock).HasMaxLength(6).IsRequired();
+                entity.Property(p => p.IsActive).IsRequired();
+                entity.Property(p => p.ImageUrl).IsRequired();
+
+                entity.HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
         }
     }
 }

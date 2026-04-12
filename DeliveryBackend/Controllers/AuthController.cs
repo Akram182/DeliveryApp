@@ -19,8 +19,8 @@ namespace DeliveryBackend.Controllers
         public async Task<IActionResult> Ping()
         {
             _logger.LogInformation("Get:api/auth/ping");
-
-            return Ok( new { message = "Service is working"});
+            var mesg = Environment.GetEnvironmentVariable("HELLO");
+            return Ok( new { message = "Service is working",env = mesg});
         }
     }
 }

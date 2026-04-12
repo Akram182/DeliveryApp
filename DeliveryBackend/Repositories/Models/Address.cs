@@ -11,5 +11,7 @@
         public string Comment { get; set; }
         public bool LeaveAtDoor { get; set; }
         public User User { get; set; }
+        public ICollection<Order> PickUpOrders  { get; set; }
+        public ICollection<Order> DeliveryOrders{ get; set; } 
     }
 }

@@ -11,7 +11,7 @@
         public decimal Balance { get; set; }
         public DateTime Created_At { get; set; }
 
-        public ICollection<Address> Addresses { get; set; }
+        public ICollection<Address>? Addresses { get; set; }
         public ICollection<Order>? OrdersAsCustomer { get; set; }
         public ICollection<Order>? OrdersAsCourier { get; set; }
     }
