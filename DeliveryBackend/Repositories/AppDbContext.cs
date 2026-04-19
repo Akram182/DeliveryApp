@@ -1,5 +1,4 @@
 ﻿using DeliveryBackend.Repositories.Models;
-using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeliveryBackend.Repositories
@@ -22,7 +21,7 @@ namespace DeliveryBackend.Repositories
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(u => u.Id);
-                entity.Property(u => u.Email).HasMaxLength(254).IsUnicode().IsRequired();
+                entity.Property(u => u.Email).HasMaxLength(254).IsRequired();
                 entity.Property(u => u.PasswordHash).IsRequired();
                 entity.Property(u => u.Role).IsRequired();
                 entity.Property(u => u.FirstName).HasMaxLength(100);
