@@ -1,4 +1,4 @@
-﻿using DeliveryBackend.Dtos;
+﻿using DeliveryBackend.Dtos.Auth;
 
 namespace DeliveryBackend.Interfaces
 {

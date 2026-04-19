@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using DeliveryBackend.Dtos;
+using DeliveryBackend.Dtos.Auth;
 using DeliveryBackend.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

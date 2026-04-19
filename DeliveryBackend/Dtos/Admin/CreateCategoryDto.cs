@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
 
-namespace DeliveryBackend.Dtos
+namespace DeliveryBackend.Dtos.Admin
 {
     public class CreateCategoryDto
     {

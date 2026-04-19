@@ -1,4 +1,4 @@
-﻿namespace DeliveryBackend.Dtos
+﻿namespace DeliveryBackend.Dtos.Auth
 {
     public class AuthResultDto
     {

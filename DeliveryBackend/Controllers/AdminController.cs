@@ -1,4 +1,4 @@
-﻿using DeliveryBackend.Dtos;
+﻿using DeliveryBackend.Dtos.Admin;
 using DeliveryBackend.Interfaces;
 using DeliveryBackend.Services;
 using Microsoft.AspNetCore.Authorization;

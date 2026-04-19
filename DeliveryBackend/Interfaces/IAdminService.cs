@@ -1,4 +1,5 @@
 ﻿using DeliveryBackend.Dtos;
+using DeliveryBackend.Dtos.Admin;
 using DeliveryBackend.Repositories.Models;
 
 namespace DeliveryBackend.Interfaces

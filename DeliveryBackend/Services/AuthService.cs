@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using DeliveryBackend.Dtos;
+using DeliveryBackend.Dtos.Auth;
 using DeliveryBackend.Interfaces;
 using DeliveryBackend.Repositories;
 using DeliveryBackend.Repositories.Models;
