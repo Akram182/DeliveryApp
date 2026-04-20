@@ -1,4 +1,4 @@
-﻿using DeliveryBackend.Repositories.Models;
+using DeliveryBackend.Repositories.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeliveryBackend.Repositories
@@ -13,6 +13,8 @@ namespace DeliveryBackend.Repositories
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -111,6 +113,36 @@ namespace DeliveryBackend.Repositories
                 entity.HasOne(p => p.Category)
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<CartItem>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Quantity).IsRequired();
+
+                entity.HasOne(c => c.User)
+                .WithMany()
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(c => c.Product)
+                .WithMany()
+                .HasForeignKey(c => c.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Transaction>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+                entity.Property(t => t.Type).IsRequired().HasMaxLength(20);
+                entity.Property(t => t.Amount).IsRequired();
+                entity.Property(t => t.Comment).HasMaxLength(300);
+                entity.Property(t => t.CreatedAt).IsRequired();
+
+                entity.HasOne(t => t.User)
+                .WithMany()
+                .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
             });
         }

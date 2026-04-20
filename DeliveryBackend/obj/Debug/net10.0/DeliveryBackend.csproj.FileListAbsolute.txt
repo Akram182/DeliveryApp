@@ -41,7 +41,6 @@ D:\Programming\DeliveryApp\DeliveryBackend\obj\Debug\net10.0\refint\DeliveryBack
 D:\Programming\DeliveryApp\DeliveryBackend\obj\Debug\net10.0\DeliveryBackend.pdb
 D:\Programming\DeliveryApp\DeliveryBackend\obj\Debug\net10.0\DeliveryBackend.genruntimeconfig.cache
 D:\Programming\DeliveryApp\DeliveryBackend\obj\Debug\net10.0\ref\DeliveryBackend.dll
-D:\Programming\DeliveryApp\DeliveryBackend\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Humanizer.dll
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Build.Framework.dll
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.CodeAnalysis.dll
@@ -54,16 +53,7 @@ D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.EntityFra
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Design.dll
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
-D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Extensions.Caching.Abstractions.dll
-D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Extensions.Caching.Memory.dll
-D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Extensions.Configuration.Abstractions.dll
-D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Extensions.DependencyInjection.dll
-D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
-D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Extensions.Logging.dll
-D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Extensions.Logging.Abstractions.dll
-D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Extensions.Options.dll
-D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.Extensions.Primitives.dll
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Microsoft.VisualStudio.SolutionPersistence.dll
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Mono.TextTemplating.dll
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\Newtonsoft.Json.dll

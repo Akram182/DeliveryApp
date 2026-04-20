@@ -26,18 +26,18 @@ namespace DeliveryBackend.Controllers
 
                 return Ok(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
         }
 
         [HttpGet("products")]
-        public async Task<IActionResult> GetProducts([FromQuery] string category, [FromQuery] int chunkLength)
+        public async Task<IActionResult> GetProducts([FromQuery] string category, [FromQuery] int chunkLength = 20)
         {
             try
             {
-                var result = await _catalogService.GetProducts(category,chunkLength);
+                var result = await _catalogService.GetProducts(category, chunkLength);
 
                 return Ok(result);
             }
@@ -48,7 +48,7 @@ namespace DeliveryBackend.Controllers
         }
 
         [HttpGet("products/{id}")]
-        public async Task<IActionResult> GetProductById([FromRoute]string id)
+        public async Task<IActionResult> GetProductById([FromRoute] string id)
         {
             try
             {
