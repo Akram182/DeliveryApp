@@ -1,0 +1,64 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 1;
+  font-size: 1.13rem;
+  letter-spacing: -0.108px;
+  font-feature-settings: 'calt' 1;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+.button--primary {
+  background: var(--color-brand);
+  color: var(--color-brand-dark);
+  border-radius: var(--radius-pill);
+  padding: var(--space-5) var(--space-16);
+}
+
+.button--primary:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.button--primary:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.button--secondary {
+  background: rgba(22, 51, 0, 0.08);
+  color: var(--color-text);
+  border-radius: var(--radius-pill);
+  padding: var(--space-8) var(--space-16);
+}
+
+.button--secondary:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.button--secondary:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.button--sm {
+  padding: var(--space-4) var(--space-12);
+  font-size: 0.88rem;
+}
+
+.button--lg {
+  padding: var(--space-6) var(--space-20);
+  font-size: 1.25rem;
+}

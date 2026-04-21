@@ -1,0 +1,143 @@
+.profilePage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-40);
+  max-width: 960px;
+}
+
+@media (max-width: 768px) {
+  .profilePage {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.85;
+  font-size: 2.5rem;
+  letter-spacing: normal;
+  font-feature-settings: 'calt' 1;
+  color: var(--color-text);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-ring);
+}
+
+.addressGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-16);
+}
+
+.addressCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-ring);
+}
+
+.addressLine {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.88rem;
+  letter-spacing: -0.084px;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.addressLabel {
+  font-weight: 600;
+  color: var(--color-brand-dark);
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: -0.108px;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.checkboxInput {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-brand-dark);
+}
+
+.addForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-ring);
+}
+
+.addFormTitle {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.13rem;
+  letter-spacing: -0.108px;
+  color: var(--color-text);
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+}
+
+.deleteBtn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: -0.108px;
+  color: var(--color-negative);
+  background: transparent;
+  border: 1px solid rgba(208, 50, 56, 0.4);
+  border-radius: var(--radius-pill);
+  padding: var(--space-6) var(--space-12);
+  cursor: pointer;
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.deleteBtn:hover {
+  transform: scale(1.05);
+  background: rgba(208, 50, 56, 0.1);
+}
+
+.deleteBtn:focus-visible {
+  outline: 2px solid var(--color-negative);
+  outline-offset: 2px;
+}
+
+.emptyAddresses {
+  padding: var(--space-40) 0;
+  text-align: center;
+}

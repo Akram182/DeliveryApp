@@ -1,0 +1,107 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-bg);
+  border-bottom: 1px solid rgba(14, 15, 12, 0.12);
+  padding: var(--space-16) 0;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--space-24);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.85;
+  font-size: 2.5rem;
+  letter-spacing: normal;
+  font-feature-settings: 'calt' 1;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+.navLink {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: -0.108px;
+  color: var(--color-text);
+  padding: var(--space-6) var(--space-16);
+  border-radius: var(--radius-pill);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.navLink:hover {
+  background: rgba(22, 51, 0, 0.08);
+  transform: scale(1.05);
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+.navLink--active {
+  background: var(--color-brand);
+  color: var(--color-brand-dark);
+}
+
+.cartBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: -0.108px;
+  color: var(--color-text);
+  background: rgba(22, 51, 0, 0.08);
+  border-radius: var(--radius-pill);
+  padding: var(--space-6) var(--space-16);
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.cartBtn:hover {
+  transform: scale(1.05);
+}
+
+.cartBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--color-brand);
+  color: var(--color-brand-dark);
+  border-radius: 50%;
+}
+
+.main {
+  min-height: calc(100vh - 80px - 60px);
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--space-24);
+}
+
+.footer {
+  border-top: 1px solid rgba(14, 15, 12, 0.12);
+  padding: var(--space-16) 0;
+  text-align: center;
+}

@@ -1,0 +1,211 @@
+/* Variables */
+:root {
+  --font-display: 'Inter', Helvetica, Arial, sans-serif;
+  --font-body: 'Inter', Helvetica, Arial, sans-serif;
+
+  --color-text: #0e0f0c;
+  --color-bg: #ffffff;
+  --color-bg-surface: #e8ebe6;
+  --color-border: #454745;
+  --color-muted: #868685;
+
+  --color-brand: #9fe870;
+  --color-brand-dark: #163300;
+  --color-brand-light: #e2f6d5;
+  --color-brand-hover: #cdffad;
+
+  --color-positive: #054d28;
+  --color-negative: #d03238;
+  --color-warning: #ffd11a;
+  --color-info: rgba(56, 200, 255, 0.1);
+  --color-accent: #ffc091;
+
+  --shadow-ring: rgba(14, 15, 12, 0.12) 0px 0px 0px 1px;
+  --shadow-inset: rgb(134, 134, 133) 0px 0px 0px 1px inset;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 30px;
+  --radius-xl: 40px;
+  --radius-pill: 9999px;
+
+  --space-1: 1px;
+  --space-2: 2px;
+  --space-3: 3px;
+  --space-4: 4px;
+  --space-5: 5px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-18: 18px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-30: 30px;
+  --space-40: 40px;
+  --space-50: 50px;
+  --space-60: 60px;
+  --space-80: 80px;
+  --space-100: 100px;
+
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.44;
+  letter-spacing: 0.18px;
+  font-feature-settings: 'calt' 1;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Typography classes */
+.typography-display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: normal;
+  font-feature-settings: 'calt' 1;
+}
+
+.typography-display-mega {
+  font-size: 7.88rem;
+}
+
+.typography-display-hero {
+  font-size: 6rem;
+}
+
+.typography-display-section {
+  font-size: 4rem;
+}
+
+.typography-display-sub {
+  font-size: 2.5rem;
+}
+
+.typography-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.44;
+  font-size: 1.13rem;
+  letter-spacing: 0.18px;
+  font-feature-settings: 'calt' 1;
+}
+
+.typography-body-semibold {
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 1.44;
+  font-size: 1.13rem;
+  letter-spacing: -0.108px;
+  font-feature-settings: 'calt' 1;
+}
+
+.typography-button {
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 1;
+  font-size: 1.13rem;
+  letter-spacing: -0.108px;
+  font-feature-settings: 'calt' 1;
+}
+
+.typography-card-title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 1.23;
+  font-size: 1.62rem;
+  letter-spacing: -0.39px;
+  font-feature-settings: 'calt' 1;
+}
+
+.typography-feature-title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 1.25;
+  font-size: 1.38rem;
+  letter-spacing: -0.396px;
+  font-feature-settings: 'calt' 1;
+}
+
+.typography-caption {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.5;
+  font-size: 0.88rem;
+  letter-spacing: -0.084px;
+  font-feature-settings: 'calt' 1;
+}
+
+.typography-small {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1;
+  font-size: 0.75rem;
+  letter-spacing: -0.084px;
+  font-feature-settings: 'calt' 1;
+}
