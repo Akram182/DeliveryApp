@@ -1,4 +1,4 @@
-﻿using DeliveryBackend.Dtos;
+using DeliveryBackend.Dtos;
 
 namespace DeliveryBackend.Interfaces
 {
@@ -6,6 +6,7 @@ namespace DeliveryBackend.Interfaces
     {
         public Task<CatalogResultDto> GetCategories();
         public Task<CatalogResultDto> GetProducts(string category,int chunkLength);
+        public Task<CatalogResultDto> GetAllProducts(int chunkLength);
         public Task<CatalogResultDto> GetProductById(string productId);
     }
 }

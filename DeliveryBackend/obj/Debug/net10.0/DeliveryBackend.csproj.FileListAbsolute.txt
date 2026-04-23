@@ -130,3 +130,4 @@ D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\ru\Microsoft.CodeAn
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Programming\DeliveryApp\DeliveryBackend\bin\Debug\net10.0\AdminSwagger.json

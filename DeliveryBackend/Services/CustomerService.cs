@@ -28,6 +28,7 @@ namespace DeliveryBackend.Services
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Role = user.Role,
                 Balance = user.Balance
             };
         }
@@ -307,10 +308,10 @@ namespace DeliveryBackend.Services
             if (!cartItems.Any())
                 throw new Exception("Корзина пуста");
 
-            var deliveryFee = decimal.Parse(_configuration["DeliveryFee"] ?? "99");
+            
             var totalAmount = cartItems.Sum(c => c.Product.Price * c.Quantity);
 
-            if (user.Balance < totalAmount + deliveryFee)
+            if (user.Balance < totalAmount)
                 throw new Exception("Недостаточно средств на балансе");
 
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
@@ -324,7 +325,7 @@ namespace DeliveryBackend.Services
                     DeliveryAddressId = createOrderDto.DeliveryAddressId,
                     Status = "Created",
                     TotalAmount = totalAmount,
-                    DeliveryFee = deliveryFee,
+                    DeliveryFee = 0,
                     CreatedAt = DateTime.UtcNow,
                     Items = new List<OrderItem>()
                 };
@@ -348,14 +349,14 @@ namespace DeliveryBackend.Services
 
                 _dbContext.Orders.Add(order);
 
-                user.Balance -= (totalAmount + deliveryFee);
+                user.Balance -= (totalAmount);
 
                 var transactionRecord = new Transaction
                 {
                     Id = Guid.NewGuid(),
                     UserId = userId,
                     Type = "Payment",
-                    Amount = -(totalAmount + deliveryFee),
+                    Amount = -(totalAmount),
                     Comment = $"Оплата заказа {order.Id}",
                     CreatedAt = DateTime.UtcNow
                 };

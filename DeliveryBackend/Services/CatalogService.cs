@@ -1,4 +1,4 @@
-﻿using DeliveryBackend.Dtos;
+using DeliveryBackend.Dtos;
 using DeliveryBackend.Interfaces;
 using DeliveryBackend.Repositories;
 using DeliveryBackend.Repositories.Models;
@@ -29,6 +29,19 @@ namespace DeliveryBackend.Services
         public async Task<CatalogResultDto> GetProducts(string category, int chunkLength)
         {
             var products = await _dbContext.Products.Where(p => p.Category.Id.ToString() == category).Take(chunkLength).ToListAsync();
+
+            if (products == null) throw new Exception("Нету продуктов");
+
+            return new CatalogResultDto
+            {
+                Categories = null,
+                Products = products
+            };
+        }
+
+        public async Task<CatalogResultDto> GetAllProducts(int chunkLength)
+        {
+            var products = await _dbContext.Products.Take(chunkLength).ToListAsync();
 
             if (products == null) throw new Exception("Нету продуктов");
 

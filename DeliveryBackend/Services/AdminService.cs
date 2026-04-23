@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using DeliveryBackend.Dtos;
 using DeliveryBackend.Dtos.Admin;
 using DeliveryBackend.Interfaces;
@@ -18,19 +18,79 @@ namespace DeliveryBackend.Services
             _dbContext = dbContext;
         }
 
+        public async Task<CatalogResultDto> GetCategories()
+        {
+            var categories = await _dbContext.Categories.ToListAsync();
+
+            return new CatalogResultDto
+            {
+                Categories = categories,
+                Products = null
+            };
+        }
+
+        public async Task<Category> GetCategoryById(Guid id)
+        {
+            return await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
+        }
+
         public async Task<Category> CreateCategory(CreateCategoryDto createCategoryDto)
         {
             var category = new Category
             {
                 Id = Guid.NewGuid(),
                 Name = createCategoryDto.Name,
-                Description = createCategoryDto.Description
+                Description = createCategoryDto.Description,
+                ImageUrl = createCategoryDto.ImageUrl
             };
 
             await _dbContext.Categories.AddAsync(category);
             await _dbContext.SaveChangesAsync();
 
             return category;
+        }
+
+        public async Task<Category> UpdateCategory(UpdateCategoryDto updateCategoryDto)
+        {
+            var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == updateCategoryDto.Id);
+
+            if (category == null) throw new Exception("Нету такого категория");
+
+            category.Name = updateCategoryDto.Name;
+            category.Description = updateCategoryDto.Description;
+            category.ImageUrl = updateCategoryDto.ImageUrl;
+
+            await _dbContext.SaveChangesAsync();
+
+            return category;    
+        }
+
+        public async Task<bool> DeleteCategory(string id)
+        {
+            var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id.ToString() == id);
+
+            if (category == null) throw new Exception("Нету такого категория");
+
+            _dbContext.Categories.Remove(category);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<CatalogResultDto> GetProducts()
+        {
+            var products = await _dbContext.Products.ToListAsync();
+
+            return new CatalogResultDto
+            {
+                Categories = null,
+                Products = products
+            };
+        }
+
+        public async Task<Product> GetProductById(Guid id)
+        {
+            return await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<Product> CreateProduct(CreateProductDto createProductDto)
@@ -54,66 +114,6 @@ namespace DeliveryBackend.Services
 
         }
 
-        public async Task<bool> DeleteCategory(string id)
-        {
-            var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id.ToString() == id);
-
-            if (category == null) throw new Exception("Нету такого категория");
-
-            _dbContext.Categories.Remove(category);
-            await _dbContext.SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<bool> DeleteProduct(string id)
-        {
-            var product = await _dbContext.Products.FirstOrDefaultAsync(c => c.Id.ToString() == id);
-
-            if (product == null) throw new Exception("Нету такого категория");
-
-            _dbContext.Products.Remove(product);
-            await _dbContext.SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<CatalogResultDto> GetCategories()
-        {
-            var categories = await _dbContext.Categories.ToListAsync();
-
-            return new CatalogResultDto
-            {
-                Categories = categories,
-                Products = null
-            };
-        }
-
-        public async Task<CatalogResultDto> GetProducts()
-        {
-            var products = await _dbContext.Products.ToListAsync();
-
-            return new CatalogResultDto
-            {
-                Categories = null,
-                Products = products
-            };
-        }
-
-        public async Task<Category> UpdateCategory(UpdateCategoryDto updateCategoryDto)
-        {
-            var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == updateCategoryDto.Id);
-
-            if (category == null) throw new Exception("Нету такого категория");
-
-            category.Name = updateCategoryDto.Name;
-            category.Description = updateCategoryDto.Description;
-
-            await _dbContext.SaveChangesAsync();
-
-            return category;    
-        }
-
         public async Task<Product> UpdateProduct(UpdateProductDto updateProductDto)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(c => c.Id == updateProductDto.Id);
@@ -130,6 +130,18 @@ namespace DeliveryBackend.Services
             await _dbContext.SaveChangesAsync();
 
             return product;
+        }
+
+        public async Task<bool> DeleteProduct(string id)
+        {
+            var product = await _dbContext.Products.FirstOrDefaultAsync(c => c.Id.ToString() == id);
+
+            if (product == null) throw new Exception("Нету такого категория");
+
+            _dbContext.Products.Remove(product);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

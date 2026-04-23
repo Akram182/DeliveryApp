@@ -22,19 +22,42 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CreateCategoryDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateCategoryDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateCategoryDto"
+                "required": [
+                  "Description",
+                  "Name"
+                ],
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "ImageUrl": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -51,19 +74,50 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateCategoryDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateCategoryDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateCategoryDto"
+                "required": [
+                  "Description",
+                  "Id",
+                  "Name"
+                ],
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "ImageUrl": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Id": {
+                  "style": "form"
+                },
+                "Name": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -114,19 +168,72 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CreateProductDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateProductDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateProductDto"
+                "required": [
+                  "CategoryId",
+                  "IsActive",
+                  "Name",
+                  "Price",
+                  "Stock"
+                ],
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "maxLength": 20,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Price": {
+                    "maximum": 99999999,
+                    "minimum": 1,
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Stock": {
+                    "maximum": 999999,
+                    "minimum": 1,
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "IsActive": {
+                    "type": "boolean"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "ImageUrl": {
+                    "type": "string"
+                  },
+                  "CategoryId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "Price": {
+                  "style": "form"
+                },
+                "Stock": {
+                  "style": "form"
+                },
+                "IsActive": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                },
+                "CategoryId": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -143,19 +250,80 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateProductDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateProductDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateProductDto"
+                "required": [
+                  "CategoryId",
+                  "Id",
+                  "IsActive",
+                  "Name",
+                  "Price",
+                  "Stock"
+                ],
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Name": {
+                    "maxLength": 20,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Price": {
+                    "maximum": 99999999,
+                    "minimum": 1,
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Stock": {
+                    "maximum": 999999,
+                    "minimum": 1,
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "IsActive": {
+                    "type": "boolean"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "ImageUrl": {
+                    "type": "string"
+                  },
+                  "CategoryId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              },
+              "encoding": {
+                "Id": {
+                  "style": "form"
+                },
+                "Name": {
+                  "style": "form"
+                },
+                "Price": {
+                  "style": "form"
+                },
+                "Stock": {
+                  "style": "form"
+                },
+                "IsActive": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                },
+                "CategoryId": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -288,6 +456,29 @@
               "type": "string"
             }
           },
+          {
+            "name": "chunkLength",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Catalog/products/all": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "parameters": [
           {
             "name": "chunkLength",
             "in": "query",
@@ -711,73 +902,10 @@
         },
         "additionalProperties": false
       },
-      "CreateCategoryDto": {
-        "required": [
-          "description",
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "description": {
-            "minLength": 1,
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateOrderDto": {
         "type": "object",
         "properties": {
-          "pickupAddressId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "deliveryAddressId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateProductDto": {
-        "required": [
-          "categoryId",
-          "isActive",
-          "name",
-          "price",
-          "stock"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "maxLength": 20,
-            "minLength": 0,
-            "type": "string"
-          },
-          "price": {
-            "maximum": 99999999,
-            "minimum": 1,
-            "type": "number",
-            "format": "double"
-          },
-          "stock": {
-            "maximum": 999999,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "imageUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "categoryId": {
             "type": "string",
             "format": "uuid"
           }
@@ -853,75 +981,6 @@
           "quantity": {
             "type": "integer",
             "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateCategoryDto": {
-        "required": [
-          "description",
-          "id",
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "description": {
-            "minLength": 1,
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateProductDto": {
-        "required": [
-          "categoryId",
-          "id",
-          "isActive",
-          "name",
-          "price",
-          "stock"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "maxLength": 20,
-            "minLength": 0,
-            "type": "string"
-          },
-          "price": {
-            "maximum": 99999999,
-            "minimum": 1,
-            "type": "number",
-            "format": "double"
-          },
-          "stock": {
-            "maximum": 999999,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "imageUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "categoryId": {
-            "type": "string",
-            "format": "uuid"
           }
         },
         "additionalProperties": false

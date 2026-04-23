@@ -1,4 +1,4 @@
-﻿
+
 using DeliveryBackend.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +38,21 @@ namespace DeliveryBackend.Controllers
             try
             {
                 var result = await _catalogService.GetProducts(category, chunkLength);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("products/all")]
+        public async Task<IActionResult> GetAllProducts([FromQuery] int chunkLength = 20)
+        {
+            try
+            {
+                var result = await _catalogService.GetAllProducts(chunkLength);
 
                 return Ok(result);
             }

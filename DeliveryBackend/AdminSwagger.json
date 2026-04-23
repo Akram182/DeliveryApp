@@ -1,0 +1,644 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "DeliveryBackend",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Admin/category": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CategoryResponse"
+                      }
+                    },
+                    "products": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                },
+                "example": {
+                  "categories": [
+                    {
+                      "id": "9ce2b565-6425-4501-a9db-cc5f0dc54131",
+                      "name": "testing",
+                      "description": "Test",
+                      "imageUrl": null,
+                      "products": null
+                    },
+                    {
+                      "id": "0b386de0-44ee-43cf-953d-637fc5f4ed02",
+                      "name": "Овощы и фрукты",
+                      "description": "Овощы и фрукты",
+                      "imageUrl": null,
+                      "products": null
+                    },
+                    {
+                      "id": "8bcebd40-bf85-4b8e-b7df-6d53b25216a0",
+                      "name": "Готовая еда",
+                      "description": "Овощы и фрукты",
+                      "imageUrl": null,
+                      "products": null
+                    },
+                    {
+                      "id": "ce526b4e-e513-4b4b-bb2b-ecd9ab6a116c",
+                      "name": "Снеки",
+                      "description": "Овощы и фрукты",
+                      "imageUrl": null,
+                      "products": null
+                    },
+                    {
+                      "id": "d6d252ea-40b5-4eb4-8719-ad2c7ab40975",
+                      "name": "Напитки",
+                      "description": "Овощы и фрукти",
+                      "imageUrl": null,
+                      "products": null
+                    },
+                    {
+                      "id": "9fd0f189-6728-481d-bfc8-971e4b7b8dfb",
+                      "name": "TestingFile",
+                      "description": "Filetest",
+                      "imageUrl": "/uploads/images/4ef97d9b-574b-4ed8-a594-90b7b05a684d.png",
+                      "products": null
+                    },
+                    {
+                      "id": "6881a18c-298b-4327-b3ca-2bc768c8bbf1",
+                      "name": "update name",
+                      "description": "update desciprtio",
+                      "imageUrl": "/uploads/images/ea7039d4-5e51-44e4-85ed-b42ab328d8c2.png",
+                      "products": null
+                    }
+                  ],
+                  "products": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Description",
+                  "Name"
+                ],
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryResponse"
+                },
+                "example": {
+                  "id": "6881a18c-298b-4327-b3ca-2bc768c8bbf1",
+                  "name": "sdfsd",
+                  "description": "sdf",
+                  "imageUrl": "/uploads/images/ea7039d4-5e51-44e4-85ed-b42ab328d8c2.png",
+                  "products": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Description",
+                  "Id",
+                  "Name"
+                ],
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Id": {
+                  "style": "form"
+                },
+                "Name": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryResponse"
+                },
+                "example": {
+                  "id": "6881a18c-298b-4327-b3ca-2bc768c8bbf1",
+                  "name": "update name",
+                  "description": "update desciprtio",
+                  "imageUrl": "/uploads/images/ea7039d4-5e51-44e4-85ed-b42ab328d8c2.png",
+                  "products": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Admin/category/{id}": {
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "example": {
+                  "message": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Admin/product": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "object",
+                      "nullable": true
+                    },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProductResponse"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "categories": null,
+                  "products": [
+                    {
+                      "id": "966bdee2-f5d7-494a-96de-ca49270718a8",
+                      "categoryId": "0b386de0-44ee-43cf-953d-637fc5f4ed02",
+                      "name": "Картофель",
+                      "price": 70.5,
+                      "stock": 100,
+                      "isActive": true,
+                      "imageUrl": "string",
+                      "items": null,
+                      "category": null
+                    },
+                    {
+                      "id": "2966d17d-d1c1-41e3-af00-bad192c23284",
+                      "categoryId": "8bcebd40-bf85-4b8e-b7df-6d53b25216a0",
+                      "name": "Шаурма",
+                      "price": 70.5,
+                      "stock": 100,
+                      "isActive": true,
+                      "imageUrl": "string",
+                      "items": null,
+                      "category": null
+                    },
+                    {
+                      "id": "53aa2f66-76eb-4187-8cbc-197fb8e6d6a0",
+                      "categoryId": "ce526b4e-e513-4b4b-bb2b-ecd9ab6a116c",
+                      "name": "Чипсы",
+                      "price": 100.5,
+                      "stock": 100,
+                      "isActive": true,
+                      "imageUrl": "string",
+                      "items": null,
+                      "category": null
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "CategoryId",
+                  "IsActive",
+                  "Name",
+                  "Price",
+                  "Stock"
+                ],
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "maxLength": 20,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Price": {
+                    "maximum": 99999999,
+                    "minimum": 1,
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Stock": {
+                    "maximum": 999999,
+                    "minimum": 1,
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "IsActive": {
+                    "type": "boolean"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "CategoryId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "Price": {
+                  "style": "form"
+                },
+                "Stock": {
+                  "style": "form"
+                },
+                "IsActive": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                },
+                "CategoryId": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                },
+                "example": {
+                  "id": "193d644b-f62f-4aaa-9ced-4091718615b9",
+                  "categoryId": "9fd0f189-6728-481d-bfc8-971e4b7b8dfb",
+                  "name": "New product",
+                  "price": 10.5,
+                  "stock": 150,
+                  "isActive": true,
+                  "imageUrl": "/uploads/images/7dcc8e0e-2953-4d7a-8a42-0f0f2b10c38b.webp",
+                  "items": null,
+                  "category": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "CategoryId",
+                  "Id",
+                  "IsActive",
+                  "Name",
+                  "Price",
+                  "Stock"
+                ],
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Name": {
+                    "maxLength": 20,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Price": {
+                    "maximum": 99999999,
+                    "minimum": 1,
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Stock": {
+                    "maximum": 999999,
+                    "minimum": 1,
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "IsActive": {
+                    "type": "boolean"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "ImageUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "nullable": true
+                  },
+                  "CategoryId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              },
+              "encoding": {
+                "Id": {
+                  "style": "form"
+                },
+                "Name": {
+                  "style": "form"
+                },
+                "Price": {
+                  "style": "form"
+                },
+                "Stock": {
+                  "style": "form"
+                },
+                "IsActive": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                },
+                "CategoryId": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                },
+                "example": {
+                  "id": "193d644b-f62f-4aaa-9ced-4091718615b9",
+                  "categoryId": "9fd0f189-6728-481d-bfc8-971e4b7b8dfb",
+                  "name": "UpdatedName",
+                  "price": 250,
+                  "stock": 15,
+                  "isActive": true,
+                  "imageUrl": "/uploads/images/7dcc8e0e-2953-4d7a-8a42-0f0f2b10c38b.webp",
+                  "items": null,
+                  "category": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Admin/product/{id}": {
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "example": {
+                  "message": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Auth/ping": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CategoryResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "products": {
+            "nullable": true
+          }
+        }
+      },
+      "ProductResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "categoryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "stock": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "items": {
+            "nullable": true
+          },
+          "category": {
+            "nullable": true
+          }
+        }
+      }
+    }
+  }
+}

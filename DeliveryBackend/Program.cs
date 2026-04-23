@@ -3,8 +3,10 @@ using DeliveryBackend.Interfaces;
 using DeliveryBackend.Repositories;
 using DeliveryBackend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;    
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.FileProviders;
 
 
 
@@ -56,6 +58,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 
@@ -74,6 +77,15 @@ app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
+
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".webp"] = "image/webp";
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "uploads")),
+    RequestPath = "/uploads",
+    ContentTypeProvider = provider
+});
 
 app.MapControllers();
 

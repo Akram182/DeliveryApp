@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace DeliveryBackend.Dtos.Admin
 {
@@ -12,5 +13,8 @@ namespace DeliveryBackend.Dtos.Admin
 
         [Required]
         public string Description { get; set; }
+
+        public IFormFile? Image { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

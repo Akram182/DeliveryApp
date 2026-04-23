@@ -1,5 +1,5 @@
-﻿
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace DeliveryBackend.Dtos.Admin
 {
@@ -20,8 +20,9 @@ namespace DeliveryBackend.Dtos.Admin
         [Required]
         public bool IsActive { get; set; }
 
-        
-        public string ImageUrl { get; set; }
+        public IFormFile? Image { get; set; }
+
+        public string? ImageUrl { get; set; }
 
         [Required]
         public Guid CategoryId { get; set; }
