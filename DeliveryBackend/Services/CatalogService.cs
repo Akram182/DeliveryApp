@@ -28,7 +28,7 @@ namespace DeliveryBackend.Services
 
         public async Task<CatalogResultDto> GetProducts(string category, int chunkLength)
         {
-            var products = await _dbContext.Products.Where(p => p.Category.Name == category).Take(chunkLength).ToListAsync();
+            var products = await _dbContext.Products.Where(p => p.Category.Id.ToString() == category).Take(chunkLength).ToListAsync();
 
             if (products == null) throw new Exception("Нету продуктов");
 

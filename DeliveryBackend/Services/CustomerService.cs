@@ -292,13 +292,11 @@ namespace DeliveryBackend.Services
             var user = await _dbContext.Users.FindAsync(userId)
                 ?? throw new Exception("Пользователь не найден");
 
-            var pickupAddress = await _dbContext.Addresses.FindAsync(createOrderDto.PickupAddressId)
-                ?? throw new Exception("Адрес самовывоза не найден");
 
             var deliveryAddress = await _dbContext.Addresses.FindAsync(createOrderDto.DeliveryAddressId)
                 ?? throw new Exception("Адрес доставки не найден");
 
-            if (pickupAddress.UserId != userId || deliveryAddress.UserId != userId)
+            if (deliveryAddress.UserId != userId)
                 throw new Exception("Адреса должны принадлежать пользователю");
 
             var cartItems = await _dbContext.CartItems
@@ -322,7 +320,7 @@ namespace DeliveryBackend.Services
                 {
                     Id = Guid.NewGuid(),
                     CustomerId = userId,
-                    PickupAddressId = createOrderDto.PickupAddressId,
+                    PickupAddressId = createOrderDto.DeliveryAddressId,
                     DeliveryAddressId = createOrderDto.DeliveryAddressId,
                     Status = "Created",
                     TotalAmount = totalAmount,
