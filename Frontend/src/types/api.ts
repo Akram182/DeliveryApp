@@ -153,3 +153,44 @@ export interface UpdateProductDto extends CreateProductDto {
   id: string;
 }
 
+// ---- Courier ----
+export interface CreateCourierDto {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface CourierProfile {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  isAvailable: boolean;
+  totalEarnings: number;
+  activeOrdersCount: number;
+}
+
+export interface UpdateAvailabilityDto {
+  isAvailable: boolean;
+}
+
+export type CourierOrderStatus =
+  | "Created"
+  | "Pending"
+  | "PickedUp"
+  | "InTransit"
+  | "Delivered"
+  | "Cancelled";
+
+export interface UpdateOrderStatusDto {
+  status: CourierOrderStatus;
+}
+
+export interface CourierEarning {
+  id: string;
+  orderId: string;
+  amount: number;
+  createdAt: string;
+}
+

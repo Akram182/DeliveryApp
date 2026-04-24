@@ -76,6 +76,11 @@ export function Header() {
                   Админ
                 </Link>
               )}
+              {(user?.role === "courier" || user?.role === "Courier") && (
+                <Link to="/courier" className="btn btn-ghost btn-sm">
+                  Курьер
+                </Link>
+              )}
               <Link to="/profile" className="btn btn-secondary btn-sm">
                 <UserIcon size={16} />
                 <span>{user?.firstName ?? user?.email ?? "Профиль"}</span>

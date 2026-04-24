@@ -9,6 +9,7 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public decimal Balance { get; set; }
+        public bool IsAvailable { get; set; }
         public DateTime Created_At { get; set; }
 
         public ICollection<Address>? Addresses { get; set; }

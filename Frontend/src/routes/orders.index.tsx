@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { customerService } from "@/lib/services";
 import { ProtectedView, requireAuthBeforeLoad } from "@/components/Protected";
+import { statusBadgeStyle, statusLabel } from "@/lib/orderStatus";
 
 const search = z.object({
   page: fallback(z.number(), 1).default(1),
@@ -15,13 +16,6 @@ export const Route = createFileRoute("/orders/")({
   beforeLoad: () => requireAuthBeforeLoad(),
   component: OrdersPage,
 });
-
-function statusColor(status: string) {
-  const s = status.toLowerCase();
-  if (s.includes("delivered") || s.includes("выполнен")) return "var(--color-success)";
-  if (s.includes("cancel") || s.includes("отмен")) return "var(--color-danger)";
-  return "var(--color-wise-green-deep)";
-}
 
 function OrdersPage() {
   const { page, pageSize } = Route.useSearch();
@@ -76,8 +70,8 @@ function OrdersPage() {
                         : ""}
                     </div>
                   </div>
-                  <span className="badge-mint" style={{ color: statusColor(o.status) }}>
-                    {o.status}
+                  <span style={statusBadgeStyle(o.status)}>
+                    {statusLabel(o.status)}
                   </span>
                   <span className="font-display" style={{ fontSize: "1.5rem", fontWeight: 900 }}>
                     {(o.total ?? 0).toLocaleString("ru-RU")} ₽

@@ -12,16 +12,22 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as CourierRouteImport } from './routes/courier'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProfileIndexRouteImport } from './routes/profile.index'
 import { Route as OrdersIndexRouteImport } from './routes/orders.index'
+import { Route as CourierIndexRouteImport } from './routes/courier.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProfileBalanceRouteImport } from './routes/profile.balance'
 import { Route as ProfileAddressesRouteImport } from './routes/profile.addresses'
 import { Route as OrdersIdRouteImport } from './routes/orders.$id'
+import { Route as CourierEarningsRouteImport } from './routes/courier.earnings'
 import { Route as AdminProductsRouteImport } from './routes/admin.products'
+import { Route as AdminCouriersRouteImport } from './routes/admin.couriers'
+import { Route as CourierOrdersIndexRouteImport } from './routes/courier.orders.index'
+import { Route as CourierOrdersIdRouteImport } from './routes/courier.orders.$id'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -36,6 +42,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CourierRoute = CourierRouteImport.update({
+  id: '/courier',
+  path: '/courier',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CartRoute = CartRouteImport.update({
@@ -63,6 +74,11 @@ const OrdersIndexRoute = OrdersIndexRouteImport.update({
   path: '/orders/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CourierIndexRoute = CourierIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CourierRoute,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -83,55 +99,92 @@ const OrdersIdRoute = OrdersIdRouteImport.update({
   path: '/orders/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CourierEarningsRoute = CourierEarningsRouteImport.update({
+  id: '/earnings',
+  path: '/earnings',
+  getParentRoute: () => CourierRoute,
+} as any)
 const AdminProductsRoute = AdminProductsRouteImport.update({
   id: '/products',
   path: '/products',
   getParentRoute: () => AdminRoute,
+} as any)
+const AdminCouriersRoute = AdminCouriersRouteImport.update({
+  id: '/couriers',
+  path: '/couriers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const CourierOrdersIndexRoute = CourierOrdersIndexRouteImport.update({
+  id: '/orders/',
+  path: '/orders/',
+  getParentRoute: () => CourierRoute,
+} as any)
+const CourierOrdersIdRoute = CourierOrdersIdRouteImport.update({
+  id: '/orders/$id',
+  path: '/orders/$id',
+  getParentRoute: () => CourierRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/cart': typeof CartRoute
+  '/courier': typeof CourierRouteWithChildren
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRouteWithChildren
   '/register': typeof RegisterRoute
+  '/admin/couriers': typeof AdminCouriersRoute
   '/admin/products': typeof AdminProductsRoute
+  '/courier/earnings': typeof CourierEarningsRoute
   '/orders/$id': typeof OrdersIdRoute
   '/profile/addresses': typeof ProfileAddressesRoute
   '/profile/balance': typeof ProfileBalanceRoute
   '/admin/': typeof AdminIndexRoute
+  '/courier/': typeof CourierIndexRoute
   '/orders/': typeof OrdersIndexRoute
   '/profile/': typeof ProfileIndexRoute
+  '/courier/orders/$id': typeof CourierOrdersIdRoute
+  '/courier/orders/': typeof CourierOrdersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/admin/couriers': typeof AdminCouriersRoute
   '/admin/products': typeof AdminProductsRoute
+  '/courier/earnings': typeof CourierEarningsRoute
   '/orders/$id': typeof OrdersIdRoute
   '/profile/addresses': typeof ProfileAddressesRoute
   '/profile/balance': typeof ProfileBalanceRoute
   '/admin': typeof AdminIndexRoute
+  '/courier': typeof CourierIndexRoute
   '/orders': typeof OrdersIndexRoute
   '/profile': typeof ProfileIndexRoute
+  '/courier/orders/$id': typeof CourierOrdersIdRoute
+  '/courier/orders': typeof CourierOrdersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/cart': typeof CartRoute
+  '/courier': typeof CourierRouteWithChildren
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRouteWithChildren
   '/register': typeof RegisterRoute
+  '/admin/couriers': typeof AdminCouriersRoute
   '/admin/products': typeof AdminProductsRoute
+  '/courier/earnings': typeof CourierEarningsRoute
   '/orders/$id': typeof OrdersIdRoute
   '/profile/addresses': typeof ProfileAddressesRoute
   '/profile/balance': typeof ProfileBalanceRoute
   '/admin/': typeof AdminIndexRoute
+  '/courier/': typeof CourierIndexRoute
   '/orders/': typeof OrdersIndexRoute
   '/profile/': typeof ProfileIndexRoute
+  '/courier/orders/$id': typeof CourierOrdersIdRoute
+  '/courier/orders/': typeof CourierOrdersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -139,50 +192,68 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/cart'
+    | '/courier'
     | '/login'
     | '/profile'
     | '/register'
+    | '/admin/couriers'
     | '/admin/products'
+    | '/courier/earnings'
     | '/orders/$id'
     | '/profile/addresses'
     | '/profile/balance'
     | '/admin/'
+    | '/courier/'
     | '/orders/'
     | '/profile/'
+    | '/courier/orders/$id'
+    | '/courier/orders/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/cart'
     | '/login'
     | '/register'
+    | '/admin/couriers'
     | '/admin/products'
+    | '/courier/earnings'
     | '/orders/$id'
     | '/profile/addresses'
     | '/profile/balance'
     | '/admin'
+    | '/courier'
     | '/orders'
     | '/profile'
+    | '/courier/orders/$id'
+    | '/courier/orders'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/cart'
+    | '/courier'
     | '/login'
     | '/profile'
     | '/register'
+    | '/admin/couriers'
     | '/admin/products'
+    | '/courier/earnings'
     | '/orders/$id'
     | '/profile/addresses'
     | '/profile/balance'
     | '/admin/'
+    | '/courier/'
     | '/orders/'
     | '/profile/'
+    | '/courier/orders/$id'
+    | '/courier/orders/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   CartRoute: typeof CartRoute
+  CourierRoute: typeof CourierRouteWithChildren
   LoginRoute: typeof LoginRoute
   ProfileRoute: typeof ProfileRouteWithChildren
   RegisterRoute: typeof RegisterRoute
@@ -211,6 +282,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courier': {
+      id: '/courier'
+      path: '/courier'
+      fullPath: '/courier'
+      preLoaderRoute: typeof CourierRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cart': {
@@ -248,6 +326,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrdersIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/courier/': {
+      id: '/courier/'
+      path: '/'
+      fullPath: '/courier/'
+      preLoaderRoute: typeof CourierIndexRouteImport
+      parentRoute: typeof CourierRoute
+    }
     '/admin/': {
       id: '/admin/'
       path: '/'
@@ -276,6 +361,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrdersIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/courier/earnings': {
+      id: '/courier/earnings'
+      path: '/earnings'
+      fullPath: '/courier/earnings'
+      preLoaderRoute: typeof CourierEarningsRouteImport
+      parentRoute: typeof CourierRoute
+    }
     '/admin/products': {
       id: '/admin/products'
       path: '/products'
@@ -283,20 +375,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProductsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/couriers': {
+      id: '/admin/couriers'
+      path: '/couriers'
+      fullPath: '/admin/couriers'
+      preLoaderRoute: typeof AdminCouriersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/courier/orders/': {
+      id: '/courier/orders/'
+      path: '/orders'
+      fullPath: '/courier/orders/'
+      preLoaderRoute: typeof CourierOrdersIndexRouteImport
+      parentRoute: typeof CourierRoute
+    }
+    '/courier/orders/$id': {
+      id: '/courier/orders/$id'
+      path: '/orders/$id'
+      fullPath: '/courier/orders/$id'
+      preLoaderRoute: typeof CourierOrdersIdRouteImport
+      parentRoute: typeof CourierRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
+  AdminCouriersRoute: typeof AdminCouriersRoute
   AdminProductsRoute: typeof AdminProductsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminCouriersRoute: AdminCouriersRoute,
   AdminProductsRoute: AdminProductsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface CourierRouteChildren {
+  CourierEarningsRoute: typeof CourierEarningsRoute
+  CourierIndexRoute: typeof CourierIndexRoute
+  CourierOrdersIdRoute: typeof CourierOrdersIdRoute
+  CourierOrdersIndexRoute: typeof CourierOrdersIndexRoute
+}
+
+const CourierRouteChildren: CourierRouteChildren = {
+  CourierEarningsRoute: CourierEarningsRoute,
+  CourierIndexRoute: CourierIndexRoute,
+  CourierOrdersIdRoute: CourierOrdersIdRoute,
+  CourierOrdersIndexRoute: CourierOrdersIndexRoute,
+}
+
+const CourierRouteWithChildren =
+  CourierRoute._addFileChildren(CourierRouteChildren)
 
 interface ProfileRouteChildren {
   ProfileAddressesRoute: typeof ProfileAddressesRoute
@@ -317,6 +449,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   CartRoute: CartRoute,
+  CourierRoute: CourierRouteWithChildren,
   LoginRoute: LoginRoute,
   ProfileRoute: ProfileRouteWithChildren,
   RegisterRoute: RegisterRoute,

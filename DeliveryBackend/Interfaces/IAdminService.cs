@@ -18,5 +18,6 @@ namespace DeliveryBackend.Interfaces
         public Task<Product> UpdateProduct(UpdateProductDto updateProductDto);
         public Task<bool> DeleteProduct(string id);
 
+        public Task<User> CreateCourierAsync(CreateCourierDto createCourierDto);
     }
 }

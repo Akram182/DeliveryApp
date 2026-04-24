@@ -7,8 +7,11 @@ import type {
   Cart,
   CartItem,
   Category,
+  CourierEarning,
+  CourierProfile,
   CreateAddressDto,
   CreateCategoryDto,
+  CreateCourierDto,
   CreateOrderDto,
   CreateProductDto,
   LoginDto,
@@ -16,8 +19,10 @@ import type {
   Product,
   RegistrationDto,
   TopUpDto,
+  UpdateAvailabilityDto,
   UpdateCartItemDto,
   UpdateCategoryDto,
+  UpdateOrderStatusDto,
   UpdateProductDto,
   UpdateUserDto,
   User,
@@ -181,4 +186,37 @@ export const adminService = {
       .then((r) => r.data),
   removeProduct: (id: string) =>
     api.delete(`/api/Admin/product/${id}`).then((r) => r.data),
+
+  createCourier: (dto: CreateCourierDto) =>
+    api
+      .post<{ message: string; id: string }>("/api/Admin/courier", dto)
+      .then((r) => r.data),
+};
+
+// Courier
+export const courierService = {
+  profile: () =>
+    api.get<CourierProfile>("/api/Courier/profile").then((r) => r.data),
+  updateAvailability: (dto: UpdateAvailabilityDto) =>
+    api
+      .patch<{ message: string }>("/api/Courier/availability", dto)
+      .then((r) => r.data),
+  orders: (params?: { page?: number; pageSize?: number }) =>
+    api
+      .get<Order[]>("/api/Courier/orders", {
+        params: { page: 1, pageSize: 10, ...params },
+      })
+      .then((r) => (r.data ?? []).map(normalizeOrder)),
+  order: (id: string) =>
+    api.get<Order>(`/api/Courier/orders/${id}`).then((r) => normalizeOrder(r.data)),
+  acceptOrder: (id: string) =>
+    api
+      .post<Order>(`/api/Courier/orders/${id}/accept`)
+      .then((r) => normalizeOrder(r.data)),
+  updateOrderStatus: (id: string, dto: UpdateOrderStatusDto) =>
+    api
+      .patch<Order>(`/api/Courier/orders/${id}/status`, dto)
+      .then((r) => normalizeOrder(r.data)),
+  earnings: () =>
+    api.get<CourierEarning[]>("/api/Courier/earnings").then((r) => r.data ?? []),
 };

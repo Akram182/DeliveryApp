@@ -1,27 +1,27 @@
 import { createFileRoute, Outlet, Link, useLocation } from "@tanstack/react-router";
 import {
-  AdminOnly,
+  CourierOnly,
   ProtectedView,
   requireAuthBeforeLoad,
 } from "@/components/Protected";
 
-export const Route = createFileRoute("/admin")({
+export const Route = createFileRoute("/courier")({
   beforeLoad: () => requireAuthBeforeLoad(),
-  component: AdminLayout,
+  component: CourierLayout,
 });
 
-function AdminLayout() {
+function CourierLayout() {
   const loc = useLocation();
   const tabs = [
-    { to: "/admin", label: "Категории" },
-    { to: "/admin/products", label: "Товары" },
-    { to: "/admin/couriers", label: "Курьеры" },
+    { to: "/courier", label: "Профиль" },
+    { to: "/courier/orders", label: "Заказы" },
+    { to: "/courier/earnings", label: "Заработок" },
   ];
   return (
     <ProtectedView>
-      <AdminOnly>
+      <CourierOnly>
         <div className="container-wise" style={{ paddingBlock: "32px 64px" }}>
-          <h2 style={{ marginBottom: 24 }}>Админ-панель</h2>
+          <h2 style={{ marginBottom: 24 }}>Курьер</h2>
           <div
             role="tablist"
             style={{
@@ -37,8 +37,8 @@ function AdminLayout() {
           >
             {tabs.map((t) => {
               const active =
-                t.to === "/admin"
-                  ? loc.pathname === "/admin"
+                t.to === "/courier"
+                  ? loc.pathname === "/courier"
                   : loc.pathname.startsWith(t.to);
               return (
                 <Link
@@ -57,7 +57,7 @@ function AdminLayout() {
           </div>
           <Outlet />
         </div>
-      </AdminOnly>
+      </CourierOnly>
     </ProtectedView>
   );
 }

@@ -15,6 +15,7 @@ namespace DeliveryBackend.Repositories
         public DbSet<Category> Categories { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<CourierEarning> CourierEarnings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +30,7 @@ namespace DeliveryBackend.Repositories
                 entity.Property(u => u.FirstName).HasMaxLength(100);
                 entity.Property(u => u.LastName).HasMaxLength(100);
                 entity.Property(u => u.Balance);
+                entity.Property(u => u.IsAvailable);
                 entity.Property(u => u.Created_At);
             });
 
@@ -143,6 +145,23 @@ namespace DeliveryBackend.Repositories
                 entity.HasOne(t => t.User)
                 .WithMany()
                 .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<CourierEarning>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Amount).IsRequired();
+                entity.Property(e => e.CreatedAt).IsRequired();
+
+                entity.HasOne(e => e.Courier)
+                .WithMany()
+                .HasForeignKey(e => e.CourierId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Order)
+                .WithMany()
+                .HasForeignKey(e => e.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
             });
         }

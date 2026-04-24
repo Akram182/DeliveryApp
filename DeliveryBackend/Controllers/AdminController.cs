@@ -181,6 +181,20 @@ namespace DeliveryBackend.Controllers
             }
         }
 
+        [HttpPost("courier")]
+        public async Task<IActionResult> CreateCourier([FromBody] CreateCourierDto createCourierDto)
+        {
+            try
+            {
+                var courier = await _adminService.CreateCourierAsync(createCourierDto);
+                return Ok(new { message = "Курьер создан", id = courier.Id });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
 
     }
 }

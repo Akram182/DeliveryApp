@@ -19,6 +19,7 @@ function LoginPage() {
   const { setToken, setUser } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
@@ -68,14 +69,38 @@ function LoginPage() {
           </label>
           <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span style={{ fontSize: 14, fontWeight: 600 }}>Пароль</span>
-            <input
-              type="password"
-              required
-              autoComplete="current-password"
-              className="field"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                autoComplete="current-password"
+                className="field"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{ paddingRight: 56, width: "100%" }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Скрыть пароль" : "Показать пароль"}
+                style={{
+                  position: "absolute",
+                  right: 8,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "var(--color-ink-muted)",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  padding: "6px 10px",
+                  borderRadius: 8,
+                }}
+              >
+                {showPassword ? "Скрыть" : "Показать"}
+              </button>
+            </div>
           </label>
 
           {err && (

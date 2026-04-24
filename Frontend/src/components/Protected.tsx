@@ -62,3 +62,26 @@ export function AdminOnly({ children }: { children: ReactNode }) {
   }
   return <>{children}</>;
 }
+
+export function CourierOnly({ children }: { children: ReactNode }) {
+  const { user, status } = useAuth();
+  if (status !== "ready") {
+    return (
+      <div className="container-wise" style={{ paddingBlock: 64, color: "var(--color-ink-muted)" }}>
+        Загружаем…
+      </div>
+    );
+  }
+  const isCourier = user?.role === "courier" || user?.role === "Courier";
+  if (!isCourier) {
+    return (
+      <div className="container-wise" style={{ paddingBlock: 64 }}>
+        <h2 style={{ marginBottom: 12 }}>Нет доступа</h2>
+        <p style={{ color: "var(--color-ink-muted)" }}>
+          Эта страница доступна только курьерам.
+        </p>
+      </div>
+    );
+  }
+  return <>{children}</>;
+}

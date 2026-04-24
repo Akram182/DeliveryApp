@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { customerService } from "@/lib/services";
 import { ProtectedView, requireAuthBeforeLoad } from "@/components/Protected";
+import { statusBadgeStyle, statusLabel } from "@/lib/orderStatus";
 
 export const Route = createFileRoute("/orders/$id")({
   beforeLoad: () => requireAuthBeforeLoad(),
@@ -52,7 +53,7 @@ function OrderDetailsPage() {
                     : ""}
                 </div>
               </div>
-              <span className="badge-mint">{order.data.status}</span>
+              <span style={statusBadgeStyle(order.data.status)}>{statusLabel(order.data.status)}</span>
             </div>
 
             <ul

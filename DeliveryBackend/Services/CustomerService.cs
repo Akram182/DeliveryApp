@@ -367,6 +367,8 @@ namespace DeliveryBackend.Services
                 await _dbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
 
+                await AssignCourierToOrderAsync(order.Id);
+
                 var result = await _dbContext.Orders
                     .Include(o => o.PickupAddress)
                     .Include(o => o.DeliveryAddress)
@@ -420,6 +422,55 @@ namespace DeliveryBackend.Services
                     Price = i.CurrentPrice
                 }).ToList()
             };
+        }
+
+        private async Task AssignCourierToOrderAsync(Guid orderId)
+        {
+            var availableCouriers = await _dbContext.Users
+                .Where(u => u.Role == "Courier" && u.IsAvailable)
+                .ToListAsync();
+
+            if (!availableCouriers.Any())
+                return;
+
+            var activeOrderCountsList = await _dbContext.Orders
+                .Where(o => o.CourierId != null &&
+                          (o.Status == "Pending" || o.Status == "PickedUp" || o.Status == "InTransit"))
+                .GroupBy(o => o.CourierId)
+                .Select(g => new { CourierId = g.Key, Count = g.Count() })
+                .ToListAsync();
+
+            var activeOrderCounts = activeOrderCountsList
+                .Where(c => c.CourierId.HasValue)
+                .ToDictionary(c => c.CourierId!.Value, c => c.Count);
+
+            var minCount = activeOrderCounts.Any()
+                ? activeOrderCounts.Values.Min()
+                : 0;
+
+            var courierIdsWithMinOrders = activeOrderCounts
+                .Where(kv => kv.Value == minCount)
+                .Select(kv => kv.Key)
+                .ToHashSet();
+
+            User? courier = null;
+            
+            if (courierIdsWithMinOrders.Any())
+            {
+                courier = availableCouriers
+                    .FirstOrDefault(c => courierIdsWithMinOrders.Contains(c.Id));
+            }
+
+            if (courier == null)
+                courier = availableCouriers.First();
+
+            var order = await _dbContext.Orders.FindAsync(orderId);
+            if (order != null && courier != null)
+            {
+                order.CourierId = courier.Id;
+                order.Status = "Pending";
+                await _dbContext.SaveChangesAsync();
+            }
         }
     }
 }

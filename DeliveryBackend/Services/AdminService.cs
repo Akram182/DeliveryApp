@@ -1,10 +1,11 @@
+using System.Security.Cryptography;
+using System.Text;
 using System.Diagnostics;
 using DeliveryBackend.Dtos;
 using DeliveryBackend.Dtos.Admin;
 using DeliveryBackend.Interfaces;
 using DeliveryBackend.Repositories;
 using DeliveryBackend.Repositories.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeliveryBackend.Services
@@ -142,6 +143,42 @@ namespace DeliveryBackend.Services
             await _dbContext.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<User> CreateCourierAsync(CreateCourierDto createCourierDto)
+        {
+            var existingUser = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == createCourierDto.Email);
+            if (existingUser != null)
+                throw new Exception("Пользователь с таким email уже существует");
+
+            var passwordHash = GeneratePasswordHash(createCourierDto.Password);
+
+            var courier = new User
+            {
+                Id = Guid.NewGuid(),
+                Email = createCourierDto.Email,
+                PasswordHash = passwordHash,
+                Role = "Courier",
+                FirstName = createCourierDto.FirstName,
+                LastName = createCourierDto.LastName,
+                Balance = 0,
+                IsAvailable = true,
+                Created_At = DateTime.UtcNow
+            };
+
+            _dbContext.Users.Add(courier);
+            await _dbContext.SaveChangesAsync();
+
+            return courier;
+        }
+
+        private string GeneratePasswordHash(string password)
+        {
+            using var hmac = new HMACSHA512();
+            var passwordSalt = hmac.Key;
+            var passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+            return Convert.ToBase64String(passwordSalt) + ':' + Convert.ToBase64String(passwordHash);
         }
     }
 }
