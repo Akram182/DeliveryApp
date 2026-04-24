@@ -104,7 +104,7 @@ namespace DeliveryBackend.Repositories
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasKey(p => p.Id);
-                entity.Property(p => p.Name).HasMaxLength(20).IsRequired();
+                entity.Property(p => p.Name).HasMaxLength(50).IsRequired();
                 entity.Property(p => p.Price).HasMaxLength(25).IsRequired();
                 entity.Property(p => p.Stock).HasMaxLength(6).IsRequired();
                 entity.Property(p => p.IsActive).IsRequired();

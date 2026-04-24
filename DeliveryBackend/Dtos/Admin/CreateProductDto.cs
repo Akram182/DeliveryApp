@@ -6,7 +6,7 @@ namespace DeliveryBackend.Dtos.Admin
     public class CreateProductDto
     {
         [Required]
-        [StringLength(20, ErrorMessage = "Максимальная длина Name - 20")]
+        [StringLength(50, ErrorMessage = "Максимальная длина Name - 20")]
         public string Name { get; set; }
 
         [Required]
