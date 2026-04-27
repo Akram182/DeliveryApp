@@ -180,7 +180,7 @@ function AdminCategoriesPage() {
                       gap: 12,
                     }}
                   >
-                    <Thumb url={c.imageUrl} />
+                    <Thumb url={resolveImageUrl(c.imageUrl)} />
                     <div style={{ fontWeight: 700 }}>{c.name}</div>
                     <div style={{ color: "var(--color-ink-muted)", fontSize: 14 }}>
                       {c.description}
